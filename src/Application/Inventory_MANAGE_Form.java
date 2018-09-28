@@ -9,13 +9,11 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 public class Inventory_MANAGE_Form extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Manage_Inventory_Form
-     */
     String imagePth = null;
     Inventory item;
     
@@ -23,7 +21,7 @@ public class Inventory_MANAGE_Form extends javax.swing.JFrame {
         
         initComponents();
        
-        populateJtable("");
+        populateJtable();
         
         jTable_Inventory.setShowGrid(true);
         
@@ -37,25 +35,25 @@ public class Inventory_MANAGE_Form extends javax.swing.JFrame {
     }
     
     // populate the jtable
-    public void populateJtable(String val){
+    public void populateJtable(){
         
         Inventory item = new Inventory();
-        ArrayList<Inventory> InventoryList = item.inventoryList(val);
+        ArrayList<Inventory> InventoryList = item.inventoryList();
         
-        String[] colNames = {"Id","Brand","Model"};
-        Object[][] rows = new Object[InventoryList.size()][7];
-        
+        String[] colNames = {"ID","Brand","Model"};
+        Object[][] rows = new Object[InventoryList.size()][3];
+        DefaultTableModel model = (DefaultTableModel) jTable_Inventory.getModel();
+              
         for(int i = 0; i < InventoryList.size(); i++){
             rows[i][0] = InventoryList.get(i).getId();
             rows[i][1] = InventoryList.get(i).getBrand();
             rows[i][2] = InventoryList.get(i).getModel();
         }
         
-        TABLE_MODEL mmd = new TABLE_MODEL(rows, colNames);
-        jTable_Inventory.setModel(mmd);
-        jTable_Inventory.setRowHeight(80);
-        jTable_Inventory.getColumnModel().getColumn(5).setPreferredWidth(150);
-        jTable_Inventory.getColumnModel().getColumn(4).setPreferredWidth(120);
+        model.setDataVector(rows, colNames);
+        
+        jTable_Inventory.setModel(model);
+        jTable_Inventory.setRowHeight(45);
     }
     
     @SuppressWarnings("unchecked")
@@ -67,6 +65,7 @@ public class Inventory_MANAGE_Form extends javax.swing.JFrame {
         jButton_DELETE_ITEM_ = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable_Inventory = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 153, 153));
@@ -76,7 +75,7 @@ public class Inventory_MANAGE_Form extends javax.swing.JFrame {
         jButton_INSERT_ITEM_.setBackground(new java.awt.Color(30, 130, 76));
         jButton_INSERT_ITEM_.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jButton_INSERT_ITEM_.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_INSERT_ITEM_.setText("Add New Item");
+        jButton_INSERT_ITEM_.setText("Insert");
         jButton_INSERT_ITEM_.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_INSERT_ITEM_ActionPerformed(evt);
@@ -103,6 +102,16 @@ public class Inventory_MANAGE_Form extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable_Inventory);
 
+        jButton1.setBackground(new java.awt.Color(30, 130, 76));
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Refresh");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -110,10 +119,12 @@ public class Inventory_MANAGE_Form extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton_INSERT_ITEM_, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton_DELETE_ITEM_, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jButton_DELETE_ITEM_, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+                        .addComponent(jButton_INSERT_ITEM_, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -121,25 +132,27 @@ public class Inventory_MANAGE_Form extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton_INSERT_ITEM_)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton_DELETE_ITEM_)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jButton_DELETE_ITEM_)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -152,6 +165,7 @@ public class Inventory_MANAGE_Form extends javax.swing.JFrame {
             int rowIndex = jTable_Inventory.getSelectedRow();
             int id = Integer.valueOf(jTable_Inventory.getValueAt(rowIndex, 0).toString());
             Inventory.deleteItem(id);
+            populateJtable();
         }catch(Exception ex){
             JOptionPane.showMessageDialog(null, "You Must Select An Item From The Table", "No Item Selected", 2);
         }
@@ -167,6 +181,10 @@ public class Inventory_MANAGE_Form extends javax.swing.JFrame {
         addProductForm.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
     }//GEN-LAST:event_jButton_INSERT_ITEM_ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        populateJtable();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     
     
@@ -210,6 +228,7 @@ public class Inventory_MANAGE_Form extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton_DELETE_ITEM_;
     private javax.swing.JButton jButton_INSERT_ITEM_;
     private javax.swing.JPanel jPanel1;

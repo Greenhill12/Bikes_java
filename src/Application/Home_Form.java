@@ -4,6 +4,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 public class Home_Form extends javax.swing.JFrame {
+    
+     public Home_Form() {
+        initComponents();
+     }
  
     
     @SuppressWarnings("unchecked")

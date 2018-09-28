@@ -11,9 +11,6 @@ import javax.swing.table.JTableHeader;
 
 public class Employees_MANAGE_Form extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MANAGE_CUSTOMERS_FORM
-     */
     public Employees_MANAGE_Form() {
         initComponents();
         
@@ -190,10 +187,10 @@ public class Employees_MANAGE_Form extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(jTextField_PHONE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(59, 59, 59)
-                        .addComponent(jButton_DELETE_, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(64, 64, 64)
+                        .addComponent(jButton_INSERT_, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton_INSERT_, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButton_DELETE_, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -254,9 +251,6 @@ public class Employees_MANAGE_Form extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTable_EMPLOYEES_MouseClicked
 
-    
-    
-    
     // function to check empty fields
     public boolean verifFields()
     {

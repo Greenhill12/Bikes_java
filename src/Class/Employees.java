@@ -7,7 +7,7 @@ package Class;
     import java.sql.SQLException;
     import java.sql.Statement;
     import java.util.ArrayList;
-import java.util.HashMap;
+    import java.util.HashMap;
     import java.util.logging.Level;
     import java.util.logging.Logger;
     import javax.swing.JOptionPane;
@@ -16,7 +16,7 @@ public class Employees {
         
     Connection connection;
     
-    private int id;
+    private Integer id;
     private String name;
     private String surname;
     private String phone;
@@ -30,7 +30,7 @@ public class Employees {
         this.phone = PHONE;
     }
     
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

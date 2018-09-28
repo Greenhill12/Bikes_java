@@ -105,7 +105,11 @@ public class Schedule {
         ResultSet rs;
         PreparedStatement ps;
 
-               String query = "SELECT `employees.id`, `employees.name`, `employees.surname`, `employees.phone`, `inventory.brand`, `inventory.model`, `rental.user_id`, `rental.inv_id`, `rental.date_start`, `rental.date_end` FROM `employees`, `inventory`, `rental` WHERE `employees.id` = `rental.user_id` AND `inventory.id` = `rental.inv_id` ";
+//               String query = "SELECT `e.id`, `e.name`, `e.surname`, `e.phone`, `i.id`, `i.brand`, `i.model`, `r.id`, `r.user_id`, `r.inv_id`, `r.date_start`, `r.date_end`"
+//                       + "      FROM `employees` AS `e`, `inventory` AS `i`, `rental` AS `r`"
+//                       + "      WHERE `e.id` = `r.user_id` AND `i.id` = `r.inv_id` ";
+
+        String query = "SELECT `id`, `user_id`, `inv_id`, `date_start`, `date_end` FROM `renatl`";
         
         try {
             ps = connection.prepareStatement(query);
@@ -115,13 +119,15 @@ public class Schedule {
             while(rs.next()){
                 user = new Schedule(
                     rs.getInt("id"), 
-                    rs.getString("name"),
-                    rs.getString("surname"),
-                    rs.getString("phone"),
-                    rs.getString("brand"),
-                    rs.getString("model"),
-                    rs.getString("date_start"),
-                    rs.getString("date_end")
+                    rs.getInt("user_id"),
+//                    rs.getString("e.name"),
+//                    rs.getString("e.surname"),
+//                    rs.getString("e.phone"),
+                    rs.getInt("inv_id"),    
+//                    rs.getString("i.brand"),
+//                    rs.getString("i.model"),
+                    rs.getString("r.date_start"),
+                    rs.getString("r.date_end")
                      );
                 schedule_list.add(user);
             }

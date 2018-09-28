@@ -33,7 +33,6 @@ public class Inventory_INSERT_Form extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jTextField_Brand = new javax.swing.JTextField();
         jButton_ADD_ITEM = new javax.swing.JButton();
-        jButton_CANCEL = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,20 +53,10 @@ public class Inventory_INSERT_Form extends javax.swing.JFrame {
         jButton_ADD_ITEM.setBackground(new java.awt.Color(65, 131, 215));
         jButton_ADD_ITEM.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton_ADD_ITEM.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_ADD_ITEM.setText("Add");
+        jButton_ADD_ITEM.setText("Insert");
         jButton_ADD_ITEM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_ADD_ITEMActionPerformed(evt);
-            }
-        });
-
-        jButton_CANCEL.setBackground(new java.awt.Color(255, 51, 0));
-        jButton_CANCEL.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton_CANCEL.setForeground(new java.awt.Color(255, 255, 255));
-        jButton_CANCEL.setText("Cancel");
-        jButton_CANCEL.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_CANCELActionPerformed(evt);
             }
         });
 
@@ -88,9 +77,6 @@ public class Inventory_INSERT_Form extends javax.swing.JFrame {
                             .addComponent(jTextField_Brand, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jButton_CANCEL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jButton_ADD_ITEM, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -106,8 +92,6 @@ public class Inventory_INSERT_Form extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField_Model, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
-                .addGap(18, 18, 18)
-                .addComponent(jButton_CANCEL)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton_ADD_ITEM)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -143,15 +127,11 @@ public class Inventory_INSERT_Form extends javax.swing.JFrame {
 
                 item = new Inventory(null, brand, model);
                 Inventory.updateInventory(item);
+                
+                this.setVisible(false);
             }
 
     }//GEN-LAST:event_jButton_ADD_ITEMActionPerformed
-
-    private void jButton_CANCELActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_CANCELActionPerformed
-
-        System.exit(0);
-
-    }//GEN-LAST:event_jButton_CANCELActionPerformed
 
     
     // verify the empty fields
@@ -244,7 +224,6 @@ public class Inventory_INSERT_Form extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_ADD_ITEM;
-    private javax.swing.JButton jButton_CANCEL;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;

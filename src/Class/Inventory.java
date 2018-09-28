@@ -88,11 +88,10 @@ public class Inventory {
         PreparedStatement ps;
                 
             try {
-            ps = con.prepareStatement("UPDATE `inventory` SET `brand`=?,`model`=? WHERE `id` = ?");
+            ps = con.prepareStatement("INSERT INTO `inventory`(`brand`, `model`) VALUES (?,?)");
 
             ps.setString(1, item.getBrand());
             ps.setString(2, item.getModel());
-            ps.setInt(3, item.getId());
 
             if(ps.executeUpdate() != 0){
                 JOptionPane.showMessageDialog(null, "Inventory Updated");
@@ -135,28 +134,20 @@ public class Inventory {
     }
     
      // get prodcuts list using arraylist
-    public ArrayList<Inventory> inventoryList(String val){
+    
+        public ArrayList<Inventory> inventoryList(){
         
-        ArrayList<Inventory> inventory_list = new ArrayList<>();
+        ArrayList<Inventory> item_list = new ArrayList<>();
         connection = DB_INFO.getConnection();
+        
+        Statement st;
         ResultSet rs;
         PreparedStatement ps;
-        
-               //String query = "SELECT product.id, product.name, category_id, quantity, price, picture,description,category.name as 'category' FROM product INNER JOIN category ON category.id = product.category_id";
-        
-               String query = "SELECT product.id, product.brand,model.name as 'category'\n" +
-"  FROM product\n" +
-"INNER JOIN category ON category.id = product.category_id\n" +
-"WHERE\n" +
-"CONCAT(\n" +
-"Convert(product.id , char(11)), product.brand,\n" +
-"model, category.name\n" +
-")\n" +
-"LIKE ?;";
+
+               String query = "SELECT `id`, `brand`, `model` FROM `inventory`";
         
         try {
             ps = connection.prepareStatement(query);
-            ps.setString(1, "%" + val + "%");
             rs = ps.executeQuery();
            
             Inventory item;
@@ -164,18 +155,59 @@ public class Inventory {
             while(rs.next()){
                 item = new Inventory(rs.getInt("id"), 
                                  rs.getString("brand"),
-                                 rs.getString("model")
+                                 rs.getString("model")                                
                                  );
                 
-                inventory_list.add(item);
+                item_list.add(item);
             }
         
         } catch (SQLException ex) {
             Logger.getLogger(Inventory.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return inventory_list;        
+        return item_list;        
     }
     
+//    public ArrayList<Inventory> inventoryList(String val){
+//        
+//        ArrayList<Inventory> inventory_list = new ArrayList<>();
+//        connection = DB_INFO.getConnection();
+//        ResultSet rs;
+//        PreparedStatement ps;
+//        
+//               String query = "SELECT inventory.id, inventory.brand, inventory.model FROM inventory";
+//        
+////               String query = "SELECT inventory.id, inventory.brand,model.name as 'category'\n" +
+////"  FROM product\n" +
+////"INNER JOIN category ON category.id = product.category_id\n" +
+////"WHERE\n" +
+////"CONCAT(\n" +
+////"Convert(product.id , char(11)), product.brand,\n" +
+////"model, category.name\n" +
+////")\n" +
+////"LIKE ?;";
+//        
+//        try {
+//            ps = connection.prepareStatement(query);
+//            ps.setString(1, "%" + val + "%");
+//            rs = ps.executeQuery();
+//           
+//            Inventory item;
+//            // Integer ID, String NAME, Integer CATEGORY_ID, String PRICE, byte[] PICTURE, Integer QUANTITY, String DESCRIPTION
+//            while(rs.next()){
+//                item = new Inventory(rs.getInt("id"), 
+//                                 rs.getString("brand"),
+//                                 rs.getString("model")
+//                                 );
+//                
+//                inventory_list.add(item);
+//            }
+//        
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Inventory.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return inventory_list;        
+//    }
+//    
     
     public HashMap<String, Integer> populateCombo(){
 
