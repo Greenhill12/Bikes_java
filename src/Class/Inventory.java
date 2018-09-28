@@ -223,7 +223,7 @@ public class Inventory {
 
            st = connection.createStatement();
 
-           rs = st.executeQuery("SELECT `id`, `name`, `surname`, `phone` FROM `employees`");
+           rs = st.executeQuery("SELECT `id`, `brand`, `model` FROM `inventory`");
 
            Inventory item;
 

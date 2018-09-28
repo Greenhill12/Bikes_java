@@ -22,10 +22,10 @@ public class Schedule {
     private String model;
     private String start;
     private String end;
+    private Integer userId;
+    private Integer itemId;
 
-    
-   public Schedule(){}
-    
+    public Schedule(){}
     
     public Schedule(Integer ID, String NAME, String SURNAME, String PHONE, String BRAND, String MODEL, String START, String END)
     {
@@ -35,6 +35,15 @@ public class Schedule {
         this.phone = PHONE;
         this.brand = BRAND;
         this.model = MODEL;
+        this.start = START;
+        this.end = END;
+    }
+    
+    public Schedule(Integer ID, Integer userId, Integer itemId, String START, String END)
+    {
+        this.id = ID;
+        this.userId = userId;
+        this.itemId = itemId;
         this.start = START;
         this.end = END;
     }
@@ -86,6 +95,24 @@ public class Schedule {
     public void setStart(String start) {
         this.start = start;
     }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(Integer itemId) {
+        this.itemId = itemId;
+    }
+    
+    
     
     public String getEnd() {
         return end;
@@ -105,11 +132,9 @@ public class Schedule {
         ResultSet rs;
         PreparedStatement ps;
 
-//               String query = "SELECT `e.id`, `e.name`, `e.surname`, `e.phone`, `i.id`, `i.brand`, `i.model`, `r.id`, `r.user_id`, `r.inv_id`, `r.date_start`, `r.date_end`"
-//                       + "      FROM `employees` AS `e`, `inventory` AS `i`, `rental` AS `r`"
-//                       + "      WHERE `e.id` = `r.user_id` AND `i.id` = `r.inv_id` ";
-
-        String query = "SELECT `id`, `user_id`, `inv_id`, `date_start`, `date_end` FROM `renatl`";
+               String query = "SELECT `e`.`id`, `e`.`name`, `e`.`surname`, `e`.`phone`, `i`.`id`, `i`.`brand`, `i`.`model`, `r`.`id`, `r`.`user_id`, `r`.`inv_id`, `r`.`date_start`, `r`.`date_end`"
+                       + "      FROM `employees` AS `e`, `inventory` AS `i`, `rental` AS `r`"
+                       + "      WHERE `e`.`id` = `r`.`user_id` AND `i`.`id` = `r`.`inv_id` ";
         
         try {
             ps = connection.prepareStatement(query);
@@ -119,13 +144,11 @@ public class Schedule {
             while(rs.next()){
                 user = new Schedule(
                     rs.getInt("id"), 
-                    rs.getInt("user_id"),
-//                    rs.getString("e.name"),
-//                    rs.getString("e.surname"),
-//                    rs.getString("e.phone"),
-                    rs.getInt("inv_id"),    
-//                    rs.getString("i.brand"),
-//                    rs.getString("i.model"),
+                    rs.getString("e.name"),
+                    rs.getString("e.surname"),
+                    rs.getString("e.phone"),    
+                    rs.getString("i.brand"),
+                    rs.getString("i.model"),
                     rs.getString("r.date_start"),
                     rs.getString("r.date_end")
                      );
@@ -133,23 +156,23 @@ public class Schedule {
             }
         
         } catch (SQLException ex) {
-            Logger.getLogger(Schedule.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(Schedule.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
         return schedule_list;
     }
     
-    public static void updateSchedule(Schedule list){
+    public static void insertSchedule(Schedule list){
         Connection con = DB_INFO.getConnection();
         PreparedStatement ps;
                 
             try {
-            ps = con.prepareStatement("UPDATE `rental` SET `user_id`=?,`inv_id`=?,`date_start`=?,`date_end`=? WHERE `id` = ?");
+            ps = con.prepareStatement("INSERT INTO `rental`(`user_id`, `inv_id`, `date_start`, `date_end`) VALUES (?,?,?,?)");
 
-            ps.setString(1, list.getName());
-            ps.setString(2, list.getBrand());
+            ps.setInt(1, list.getUserId());
+            ps.setInt(2, list.getItemId());
             ps.setString(3, list.getStart());
             ps.setString(4, list.getEnd());
-            ps.setInt(5, list.getId());
 
             if(ps.executeUpdate() != 0){
                 JOptionPane.showMessageDialog(null, "Schedule Updated");
